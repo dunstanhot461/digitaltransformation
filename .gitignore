@@ -1,0 +1,16 @@
+# Secrets / local config — never commit
+.env
+.env.local
+firebase-config.js
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Playwright MCP artifacts
+.playwright-mcp/

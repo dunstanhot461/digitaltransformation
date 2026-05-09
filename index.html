@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Digital AI Transformation Roadmap Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+<style>
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-2: #f0f2f8;
+  --text: #1a1f36;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-soft: #eef2ff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --surface-2: #242832;
+  --text: #e5e7eb;
+  --text-muted: #9ca3af;
+  --border: #2d3340;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-soft: #1e1b4b;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+textarea { resize: vertical; min-height: 70px; }
+
+.btn {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+.btn-secondary:hover { background: var(--surface-2); }
+.btn-danger { background: var(--danger); color: white; }
+.btn-danger:hover { opacity: 0.9; }
+.btn-ghost { background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+
+/* LANDING */
+.landing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at top left, rgba(99,102,241,0.15), transparent 50%),
+              radial-gradient(ellipse at bottom right, rgba(16,185,129,0.1), transparent 50%);
+}
+.landing-card {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+.logo {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+}
+.landing h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+.tagline { color: var(--text-muted); margin-bottom: 28px; font-size: 15px; }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+.btn-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.btn-row .btn { flex: 1; min-width: 140px; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; color: var(--text-muted); font-size: 12px; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+}
+
+/* APP LAYOUT */
+.app { display: none; min-height: 100vh; flex-direction: column; }
+.app.active { display: flex; }
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky; top: 0; z-index: 50;
+  flex-wrap: wrap;
+}
+.topbar-title { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.topbar-title .logo-mini {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.topbar-spacer { flex: 1; }
+.roadmap-id-pill {
+  padding: 6px 12px;
+  background: var(--surface-2);
+  border-radius: 20px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.roadmap-id-pill:hover { background: var(--primary-soft); color: var(--primary); }
+.collaborators { display: flex; align-items: center; gap: -4px; }
+.avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  border: 2px solid var(--surface);
+  margin-left: -8px;
+  position: relative;
+}
+.avatar:first-child { margin-left: 0; }
+.avatar.online::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 10px; height: 10px;
+  background: var(--success);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  position: sticky; top: 64px; z-index: 49;
+}
+.tab {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 6px;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.main { flex: 1; padding: 24px; max-width: 1400px; margin: 0 auto; width: 100%; }
+.view { display: none; }
+.view.active { display: block; }
+
+.page-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+}
+.page-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.page-header p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* OVERVIEW */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+.stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-value { font-size: 28px; font-weight: 800; margin-top: 6px; letter-spacing: -0.02em; }
+.stat-icon { float: right; font-size: 20px; opacity: 0.6; }
+
+.progress-bar {
+  height: 8px; background: var(--surface-2);
+  border-radius: 4px; overflow: hidden; margin-top: 8px;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--primary), #a855f7);
+  transition: width 0.3s;
+}
+
+/* PHASES */
+.phases-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.phase-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  min-height: 200px;
+}
+.phase-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.phase-title { font-weight: 700; font-size: 15px; }
+.phase-count {
+  background: var(--surface-2); padding: 2px 8px;
+  border-radius: 10px; font-size: 11px; font-weight: 600;
+  color: var(--text-muted);
+}
+
+.initiative {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--primary);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.initiative:hover { transform: translateX(2px); box-shadow: var(--shadow); }
+.initiative-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.initiative-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; font-size: 11px; }
+.tag {
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--surface); font-size: 11px; font-weight: 600;
+}
+.tag.priority-high { background: #fee2e2; color: #b91c1c; }
+.tag.priority-medium { background: #fef3c7; color: #92400e; }
+.tag.priority-low { background: #dcfce7; color: #166534; }
+.tag.status-planned { background: #e0e7ff; color: #3730a3; }
+.tag.status-progress { background: #fef3c7; color: #92400e; }
+.tag.status-done { background: #dcfce7; color: #166534; }
+.tag.status-blocked { background: #fee2e2; color: #b91c1c; }
+[data-theme="dark"] .tag.priority-high { background: #7f1d1d; color: #fecaca; }
+[data-theme="dark"] .tag.priority-medium { background: #78350f; color: #fde68a; }
+[data-theme="dark"] .tag.priority-low { background: #14532d; color: #bbf7d0; }
+[data-theme="dark"] .tag.status-planned { background: #312e81; color: #c7d2fe; }
+[data-theme="dark"] .tag.status-progress { background: #78350f; color: #fde68a; }
+[data-theme="dark"] .tag.status-done { background: #14532d; color: #bbf7d0; }
+[data-theme="dark"] .tag.status-blocked { background: #7f1d1d; color: #fecaca; }
+
+/* MATRIX */
+.matrix-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.matrix {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  background:
+    linear-gradient(to right, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+    linear-gradient(to bottom, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+}
+.matrix-quadrant {
+  position: absolute; width: 50%; height: 50%;
+  display: flex; align-items: flex-start; justify-content: flex-start;
+  padding: 12px;
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.q-quick { top: 0; left: 0; background: rgba(16,185,129,0.05); }
+.q-major { top: 0; right: 0; background: rgba(99,102,241,0.05); }
+.q-fill { bottom: 0; left: 0; background: rgba(245,158,11,0.05); }
+.q-thank { bottom: 0; right: 0; background: rgba(239,68,68,0.05); }
+.matrix-dot {
+  position: absolute;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--surface);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s;
+}
+.matrix-dot:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 10; }
+.axis-label {
+  position: absolute;
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.axis-y { top: 50%; left: -36px; transform: rotate(-90deg) translateX(50%); transform-origin: right center; }
+.axis-x { bottom: -28px; left: 50%; transform: translateX(-50%); }
+
+/* MATURITY */
+.maturity-grid { display: grid; gap: 16px; }
+.maturity-row {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+  display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+}
+.maturity-row h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.maturity-row p { font-size: 13px; color: var(--text-muted); }
+.maturity-slider { display: flex; align-items: center; gap: 8px; min-width: 220px; }
+.maturity-slider input { width: 140px; padding: 0; }
+.level-pill {
+  padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;
+  background: var(--primary-soft); color: var(--primary);
+  min-width: 90px; text-align: center;
+}
+
+/* TIMELINE */
+.timeline {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px; overflow-x: auto;
+}
+.timeline-grid { display: grid; gap: 8px; min-width: 720px; }
+.timeline-header, .timeline-row {
+  display: grid;
+  grid-template-columns: 220px repeat(12, 1fr);
+  gap: 4px; align-items: center;
+}
+.timeline-header { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.timeline-cell { text-align: center; }
+.timeline-row { padding: 6px 0; }
+.timeline-label { font-size: 13px; font-weight: 500; padding-right: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.timeline-bar-cell { position: relative; height: 26px; }
+.timeline-bar {
+  position: absolute; top: 4px; height: 18px;
+  background: linear-gradient(90deg, var(--primary), #a855f7);
+  border-radius: 4px;
+  display: flex; align-items: center; padding: 0 8px;
+  font-size: 11px; color: white; font-weight: 600;
+  white-space: nowrap; overflow: hidden;
+  z-index: 2;
+}
+
+/* RISKS */
+.risk-table { width: 100%; border-collapse: collapse; }
+.risk-table th, .risk-table td {
+  text-align: left; padding: 12px;
+  border-bottom: 1px solid var(--border); font-size: 13px;
+}
+.risk-table th { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; }
+.risk-score {
+  display: inline-block; min-width: 28px; text-align: center;
+  padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 12px;
+}
+.risk-score.low { background: #dcfce7; color: #166534; }
+.risk-score.med { background: #fef3c7; color: #92400e; }
+.risk-score.high { background: #fee2e2; color: #b91c1c; }
+[data-theme="dark"] .risk-score.low { background: #14532d; color: #bbf7d0; }
+[data-theme="dark"] .risk-score.med { background: #78350f; color: #fde68a; }
+[data-theme="dark"] .risk-score.high { background: #7f1d1d; color: #fecaca; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius);
+  width: 100%; max-width: 540px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.modal-header {
+  padding: 20px; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.modal-header h3 { font-size: 18px; font-weight: 700; }
+.modal-body { padding: 20px; }
+.modal-footer {
+  padding: 16px 20px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; justify-content: flex-end;
+}
+.qr-container {
+  background: white; padding: 16px; border-radius: var(--radius-sm);
+  display: flex; justify-content: center; margin: 16px 0;
+}
+.invite-link {
+  background: var(--surface-2);
+  padding: 10px; border-radius: var(--radius-sm);
+  font-family: ui-monospace, monospace; font-size: 12px;
+  word-break: break-all;
+}
+
+/* COMMENTS */
+.comments-list { display: flex; flex-direction: column; gap: 10px; max-height: 240px; overflow-y: auto; margin-bottom: 12px; }
+.comment {
+  background: var(--surface-2); padding: 10px 12px;
+  border-radius: var(--radius-sm); font-size: 13px;
+}
+.comment-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+
+.empty-state {
+  text-align: center; padding: 48px 16px;
+  color: var(--text-muted);
+}
+.empty-state .icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--text); color: var(--bg);
+  padding: 12px 20px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600;
+  z-index: 200;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+.app-footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.app-footer a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.app-footer a:hover { text-decoration: underline; }
+.landing-footer {
+  position: fixed;
+  bottom: 16px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.landing-footer a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.landing-footer a:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .main { padding: 16px; }
+  .landing-card { padding: 28px 20px; }
+  .topbar { padding: 10px 14px; gap: 10px; }
+  .topbar-title span:not(.logo-mini) { display: none; }
+  .stat-value { font-size: 22px; }
+  .timeline-grid { font-size: 12px; }
+  .matrix-quadrant { font-size: 10px; padding: 6px; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+
+<!-- LANDING -->
+<div class="landing" id="landing">
+  <div class="landing-card">
+    <div class="logo">🚀</div>
+    <h1>Digital AI Transformation Roadmap Studio</h1>
+    <p class="tagline">Plan, prioritise, and execute your AI transformation journey</p>
+
+    <div class="field">
+      <label>Your name</label>
+      <input type="text" id="participantName" placeholder="e.g. Alex Chen" />
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="createBtn">✨ Create New Roadmap</button>
+    </div>
+
+    <div class="divider">OR JOIN EXISTING</div>
+
+    <div class="field">
+      <label>Roadmap ID</label>
+      <input type="text" id="roadmapIdInput" placeholder="e.g. ROAD-AB12CD" />
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="joinBtn">🔗 Join Roadmap</button>
+    </div>
+  </div>
+  <div class="landing-footer">
+    Powered by <a href="https://www.tertiarycourses.com.sg/" target="_blank" rel="noopener">Tertiary Infotech Academy Pte Ltd</a>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="topbar-title">
+      <div class="logo-mini">🚀</div>
+      <span>Roadmap Studio</span>
+    </div>
+    <div class="roadmap-id-pill" id="roadmapPill" title="Click to copy">—</div>
+    <div class="topbar-spacer"></div>
+    <div class="collaborators" id="collaborators"></div>
+    <button class="btn btn-secondary btn-sm" id="inviteBtn">📤 Invite</button>
+    <button class="btn btn-ghost btn-sm" id="exportBtn">⬇️ Export</button>
+    <button class="btn btn-ghost btn-sm" id="leaveBtn">Leave</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="overview">📊 Overview</button>
+    <button class="tab" data-tab="phases">🎯 Phases & Initiatives</button>
+    <button class="tab" data-tab="matrix">⚡ Priority Matrix</button>
+    <button class="tab" data-tab="maturity">📈 Maturity Assessment</button>
+    <button class="tab" data-tab="timeline">📅 Timeline</button>
+    <button class="tab" data-tab="risks">⚠️ Risks</button>
+    <button class="tab" data-tab="kpis">🎯 KPIs</button>
+  </div>
+
+  <div class="main">
+
+    <!-- OVERVIEW -->
+    <div class="view active" id="view-overview">
+      <div class="page-header">
+        <div>
+          <h2 id="roadmapName">Untitled Roadmap</h2>
+          <p id="roadmapVision">Click to add your transformation vision...</p>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="editMetaBtn">✏️ Edit Details</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-label">Initiatives</div>
+          <div class="stat-value" id="statInit">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Completed</div>
+          <div class="stat-value" id="statDone">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚙️</div>
+          <div class="stat-label">In Progress</div>
+          <div class="stat-value" id="statProg">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-label">Overall Progress</div>
+          <div class="stat-value" id="statPct">0%</div>
+          <div class="progress-bar"><div class="progress-fill" id="statBar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom: 12px; font-size: 16px;">💬 Team Discussion</h3>
+        <div class="comments-list" id="commentsList"></div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="commentInput" placeholder="Share an update or idea..." />
+          <button class="btn btn-primary" id="postCommentBtn">Post</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASES -->
+    <div class="view" id="view-phases">
+      <div class="page-header">
+        <div><h2>Phases & Initiatives</h2><p>Organise transformation work across phases</p></div>
+        <button class="btn btn-primary" id="addInitiativeBtn">➕ Add Initiative</button>
+      </div>
+      <div class="phases-board" id="phasesBoard"></div>
+    </div>
+
+    <!-- MATRIX -->
+    <div class="view" id="view-matrix">
+      <div class="page-header">
+        <div><h2>Impact vs Effort Matrix</h2><p>Visualise priority — quick wins are top-left</p></div>
+      </div>
+      <div class="matrix-wrap">
+        <div class="matrix" id="matrixGrid">
+          <div class="matrix-quadrant q-quick">Quick Wins</div>
+          <div class="matrix-quadrant q-major">Major Projects</div>
+          <div class="matrix-quadrant q-fill">Fill-ins</div>
+          <div class="matrix-quadrant q-thank">Thankless</div>
+          <div class="axis-label axis-y">Impact →</div>
+          <div class="axis-label axis-x">Effort →</div>
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 12px; margin-top: 32px;">Each dot represents an initiative. Edit impact/effort in the Phases tab.</p>
+      </div>
+    </div>
+
+    <!-- MATURITY -->
+    <div class="view" id="view-maturity">
+      <div class="page-header">
+        <div><h2>Digital & AI Maturity Assessment</h2><p>Rate your organisation across key capabilities (1–5)</p></div>
+      </div>
+      <div class="maturity-grid" id="maturityGrid"></div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="view" id="view-timeline">
+      <div class="page-header">
+        <div><h2>12-Month Timeline</h2><p>Visual schedule of initiatives across the year</p></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-grid" id="timelineGrid"></div>
+      </div>
+    </div>
+
+    <!-- RISKS -->
+    <div class="view" id="view-risks">
+      <div class="page-header">
+        <div><h2>Risk Register</h2><p>Identify and mitigate transformation risks</p></div>
+        <button class="btn btn-primary" id="addRiskBtn">➕ Add Risk</button>
+      </div>
+      <div class="card" style="padding: 0; overflow-x: auto;">
+        <table class="risk-table">
+          <thead>
+            <tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Score</th><th>Mitigation</th><th>Owner</th><th></th></tr>
+          </thead>
+          <tbody id="risksBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="view" id="view-kpis">
+      <div class="page-header">
+        <div><h2>Key Performance Indicators</h2><p>Track measurable outcomes</p></div>
+        <button class="btn btn-primary" id="addKpiBtn">➕ Add KPI</button>
+      </div>
+      <div class="stats-grid" id="kpisGrid"></div>
+    </div>
+
+  </div>
+  <footer class="app-footer">
+    Powered by <a href="https://www.tertiarycourses.com.sg/" target="_blank" rel="noopener">Tertiary Infotech Academy Pte Ltd</a>
+  </footer>
+</div>
+
+<!-- INVITE MODAL -->
+<div class="modal-overlay" id="inviteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📤 Invite Collaborators</h3>
+      <button class="btn btn-ghost btn-sm modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">Scan the QR code or share the link.</p>
+      <div class="qr-container" id="qrContainer"></div>
+      <div class="field">
+        <label>Roadmap ID</label>
+        <div class="invite-link" id="inviteIdText">—</div>
+      </div>
+      <div class="field">
+        <label>Invite Link</label>
+        <div class="invite-link" id="inviteLinkText">—</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="copyLinkBtn">📋 Copy Link</button>
+      <button class="btn btn-primary" id="shareBtn">📲 Share</button>
+    </div>
+  </div>
+</div>
+
+<!-- INITIATIVE MODAL -->
+<div class="modal-overlay" id="initiativeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="initModalTitle">New Initiative</h3>
+      <button class="btn btn-ghost btn-sm modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="initId" />
+      <div class="field"><label>Title</label><input type="text" id="initTitle" placeholder="e.g. Customer Service AI Chatbot" /></div>
+      <div class="field"><label>Description</label><textarea id="initDesc" placeholder="Goals, scope, expected outcomes..."></textarea></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="field">
+          <label>Phase</label>
+          <select id="initPhase">
+            <option value="discovery">1. Discovery</option>
+            <option value="pilot">2. Pilot</option>
+            <option value="scale">3. Scale</option>
+            <option value="optimize">4. Optimise</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="initStatus">
+            <option value="planned">Planned</option>
+            <option value="progress">In Progress</option>
+            <option value="done">Done</option>
+            <option value="blocked">Blocked</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Priority</label>
+          <select id="initPriority">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="field"><label>Owner</label><input type="text" id="initOwner" placeholder="Person/team" /></div>
+        <div class="field"><label>Impact (1–10)</label><input type="number" id="initImpact" min="1" max="10" value="5" /></div>
+        <div class="field"><label>Effort (1–10)</label><input type="number" id="initEffort" min="1" max="10" value="5" /></div>
+        <div class="field"><label>Start Month (1–12)</label><input type="number" id="initStart" min="1" max="12" value="1" /></div>
+        <div class="field"><label>Duration (months)</label><input type="number" id="initDuration" min="1" max="12" value="3" /></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteInitBtn" style="margin-right: auto; display: none;">🗑️ Delete</button>
+      <button class="btn btn-secondary modal-close">Cancel</button>
+      <button class="btn btn-primary" id="saveInitBtn">Save Initiative</button>
+    </div>
+  </div>
+</div>
+
+<!-- META MODAL -->
+<div class="modal-overlay" id="metaModal">
+  <div class="modal">
+    <div class="modal-header"><h3>Roadmap Details</h3><button class="btn btn-ghost btn-sm modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Roadmap Name</label><input type="text" id="metaName" /></div>
+      <div class="field"><label>Vision Statement</label><textarea id="metaVision" placeholder="Where will this transformation take us?"></textarea></div>
+      <div class="field"><label>Organisation</label><input type="text" id="metaOrg" placeholder="Company name" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary modal-close">Cancel</button>
+      <button class="btn btn-primary" id="saveMetaBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- RISK MODAL -->
+<div class="modal-overlay" id="riskModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="riskModalTitle">New Risk</h3><button class="btn btn-ghost btn-sm modal-close">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="riskId" />
+      <div class="field"><label>Risk Description</label><input type="text" id="riskDesc" placeholder="e.g. Data quality issues delay AI training" /></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="field"><label>Likelihood (1–5)</label><input type="number" id="riskLikelihood" min="1" max="5" value="3" /></div>
+        <div class="field"><label>Impact (1–5)</label><input type="number" id="riskImpact" min="1" max="5" value="3" /></div>
+      </div>
+      <div class="field"><label>Mitigation Plan</label><textarea id="riskMitigation"></textarea></div>
+      <div class="field"><label>Owner</label><input type="text" id="riskOwner" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteRiskBtn" style="margin-right: auto; display: none;">🗑️ Delete</button>
+      <button class="btn btn-secondary modal-close">Cancel</button>
+      <button class="btn btn-primary" id="saveRiskBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- KPI MODAL -->
+<div class="modal-overlay" id="kpiModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="kpiModalTitle">New KPI</h3><button class="btn btn-ghost btn-sm modal-close">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="kpiId" />
+      <div class="field"><label>KPI Name</label><input type="text" id="kpiName" placeholder="e.g. AI-driven cost savings" /></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div class="field"><label>Current</label><input type="text" id="kpiCurrent" placeholder="0" /></div>
+        <div class="field"><label>Target</label><input type="text" id="kpiTarget" placeholder="100" /></div>
+        <div class="field"><label>Unit</label><input type="text" id="kpiUnit" placeholder="%" /></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteKpiBtn" style="margin-right: auto; display: none;">🗑️ Delete</button>
+      <button class="btn btn-secondary modal-close">Cancel</button>
+      <button class="btn btn-primary" id="saveKpiBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ========== FIREBASE CONFIG ==========
+   Loaded from firebase-config.js (gitignored). Falls back to localStorage
+   if the file is missing or unconfigured. See firebase-config.example.js. */
+const firebaseConfig = window.firebaseConfig || {
+  apiKey: "AIzaSyDEMO-REPLACE-WITH-YOUR-OWN-KEY",
+  databaseURL: "https://your-project-default-rtdb.firebaseio.com"
+};
+
+let db = null, useFirebase = false, authReady = null;
+try {
+  if (firebaseConfig.databaseURL && !firebaseConfig.databaseURL.includes("your-project")) {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    useFirebase = true;
+    authReady = firebase.auth().signInAnonymously()
+      .then(cred => console.log("Signed in anonymously, uid:", cred.user.uid))
+      .catch(err => { console.error("Anonymous auth failed:", err); useFirebase = false; });
+  }
+} catch(e) { console.warn("Firebase init skipped, using localStorage", e); }
+
+/* ========== STATE ========== */
+const state = {
+  roadmapId: null,
+  userId: null,
+  userName: null,
+  data: null,
+  listeners: []
+};
+
+const PHASES = [
+  { id: 'discovery', name: '1. Discovery', emoji: '🔍' },
+  { id: 'pilot', name: '2. Pilot', emoji: '🧪' },
+  { id: 'scale', name: '3. Scale', emoji: '📈' },
+  { id: 'optimize', name: '4. Optimise', emoji: '⚙️' }
+];
+
+const MATURITY_DIMENSIONS = [
+  { id: 'strategy', name: 'Strategy & Vision', desc: 'Clarity of digital/AI strategy and leadership commitment' },
+  { id: 'data', name: 'Data Foundation', desc: 'Data quality, governance, accessibility, and infrastructure' },
+  { id: 'tech', name: 'Technology & Platforms', desc: 'Cloud, AI/ML platforms, modern architecture' },
+  { id: 'talent', name: 'Talent & Skills', desc: 'AI/digital skills, hiring, training, and culture' },
+  { id: 'process', name: 'Processes & Operations', desc: 'Process digitisation and automation maturity' },
+  { id: 'governance', name: 'Governance & Ethics', desc: 'AI ethics, compliance, security, responsible AI' },
+  { id: 'customer', name: 'Customer Experience', desc: 'Digital touchpoints, personalisation, journey mapping' },
+  { id: 'innovation', name: 'Innovation & Experimentation', desc: 'Pilot velocity, learning loops, partnerships' }
+];
+
+const LEVEL_NAMES = ['—', 'Initial', 'Developing', 'Defined', 'Managed', 'Optimised'];
+
+/* ========== UTILS ========== */
+function genId(prefix) {
+  const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for (let i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)];
+  return prefix + '-' + s;
+}
+function uid() { return Math.random().toString(36).slice(2, 10); }
+function colorFor(name) {
+  const colors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+  let h = 0; for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  return colors[Math.abs(h) % colors.length];
+}
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+function $(id) { return document.getElementById(id); }
+function show(el) { el.classList.add('active'); }
+function hide(el) { el.classList.remove('active'); }
+
+/* ========== STORAGE LAYER ========== */
+function lsKey(id) { return 'roadmap_' + id; }
+function loadLocal(id) { try { return JSON.parse(localStorage.getItem(lsKey(id)) || 'null'); } catch { return null; } }
+function saveLocal(id, data) { localStorage.setItem(lsKey(id), JSON.stringify(data)); }
+
+async function getRoadmap(id) {
+  if (useFirebase) {
+    if (authReady) await authReady;
+    const snap = await db.ref('roadmaps/' + id).once('value');
+    return snap.val();
+  }
+  return loadLocal(id);
+}
+async function saveRoadmap(id, data) {
+  state.data = data;
+  if (useFirebase) {
+    if (authReady) await authReady;
+    await db.ref('roadmaps/' + id).set(data);
+  }
+  else { saveLocal(id, data); window.dispatchEvent(new CustomEvent('localchange', { detail: id })); }
+}
+async function updatePath(path, value) {
+  if (useFirebase) {
+    if (authReady) await authReady;
+    await db.ref('roadmaps/' + state.roadmapId + '/' + path).set(value);
+  } else {
+    const parts = path.split('/');
+    let obj = state.data;
+    for (let i = 0; i < parts.length - 1; i++) {
+      if (!obj[parts[i]]) obj[parts[i]] = {};
+      obj = obj[parts[i]];
+    }
+    obj[parts[parts.length - 1]] = value;
+    saveLocal(state.roadmapId, state.data);
+    window.dispatchEvent(new CustomEvent('localchange', { detail: state.roadmapId }));
+  }
+}
+
+function listenToRoadmap(id, callback) {
+  if (useFirebase) {
+    const ref = db.ref('roadmaps/' + id);
+    const handler = ref.on('value', snap => callback(snap.val()));
+    state.listeners.push(() => ref.off('value', handler));
+  } else {
+    const handler = e => { if (e.detail === id) callback(loadLocal(id)); };
+    window.addEventListener('localchange', handler);
+    window.addEventListener('storage', e => { if (e.key === lsKey(id)) callback(loadLocal(id)); });
+    state.listeners.push(() => window.removeEventListener('localchange', handler));
+  }
+}
+
+/* ========== DEFAULT DATA ========== */
+function newRoadmap(creatorName) {
+  const now = Date.now();
+  const maturity = {};
+  MATURITY_DIMENSIONS.forEach(d => maturity[d.id] = 1);
+  return {
+    name: 'Our Transformation Roadmap',
+    vision: 'Reimagine how we operate, serve customers, and create value through digital and AI.',
+    org: '',
+    createdAt: now,
+    createdBy: creatorName,
+    initiatives: {},
+    risks: {},
+    kpis: {},
+    comments: {},
+    members: {},
+    maturity
+  };
+}
+
+/* ========== THEME ========== */
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  $('themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', theme);
+}
+$('themeToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+applyTheme(localStorage.getItem('theme') || 'dark');
+
+/* ========== LANDING ========== */
+$('createBtn').addEventListener('click', async () => {
+  const name = $('participantName').value.trim();
+  if (!name) { toast('Please enter your name'); return; }
+  const id = genId('ROAD');
+  const data = newRoadmap(name);
+  await saveRoadmap(id, data);
+  enterRoadmap(id, name);
+  setTimeout(openInviteModal, 400);
+});
+
+$('joinBtn').addEventListener('click', async () => {
+  const name = $('participantName').value.trim();
+  const id = $('roadmapIdInput').value.trim().toUpperCase();
+  if (!name) { toast('Please enter your name'); return; }
+  if (!id) { toast('Please enter a Roadmap ID'); return; }
+  const data = await getRoadmap(id);
+  if (!data) { toast('Roadmap not found'); return; }
+  enterRoadmap(id, name);
+});
+
+// Auto-join from URL
+(function autoJoin() {
+  const params = new URLSearchParams(location.search);
+  const r = params.get('r');
+  if (r) {
+    $('roadmapIdInput').value = r.toUpperCase();
+    const saved = localStorage.getItem('lastName');
+    if (saved) $('participantName').value = saved;
+  }
+})();
+
+async function enterRoadmap(id, name) {
+  state.roadmapId = id;
+  state.userId = uid();
+  state.userName = name;
+  localStorage.setItem('lastName', name);
+
+  // Add member presence
+  await updatePath('members/' + state.userId, { name, joinedAt: Date.now(), color: colorFor(name) });
+  if (useFirebase) {
+    db.ref('roadmaps/' + id + '/members/' + state.userId).onDisconnect().remove();
+  }
+  window.addEventListener('beforeunload', () => {
+    if (useFirebase) db.ref('roadmaps/' + id + '/members/' + state.userId).remove();
+  });
+
+  hide($('landing'));
+  show($('app'));
+  $('roadmapPill').textContent = id;
+
+  listenToRoadmap(id, data => {
+    if (!data) return;
+    state.data = data;
+    render();
+  });
+}
+
+$('roadmapPill').addEventListener('click', () => {
+  navigator.clipboard.writeText(state.roadmapId);
+  toast('Roadmap ID copied');
+});
+
+$('leaveBtn').addEventListener('click', async () => {
+  if (state.roadmapId && state.userId) {
+    await updatePath('members/' + state.userId, null);
+  }
+  state.listeners.forEach(off => off());
+  state.listeners = [];
+  hide($('app'));
+  show($('landing'));
+  state.roadmapId = null;
+  history.replaceState(null, '', location.pathname);
+});
+
+/* ========== TABS ========== */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    tab.classList.add('active');
+    $('view-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ========== MODALS ========== */
+document.querySelectorAll('.modal-close').forEach(b => {
+  b.addEventListener('click', () => b.closest('.modal-overlay').classList.remove('active'));
+});
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+});
+
+/* ========== INVITE ========== */
+$('inviteBtn').addEventListener('click', openInviteModal);
+function openInviteModal() {
+  const url = location.origin + location.pathname + '?r=' + state.roadmapId;
+  $('inviteIdText').textContent = state.roadmapId;
+  $('inviteLinkText').textContent = url;
+  const qrEl = $('qrContainer');
+  qrEl.innerHTML = '';
+  new QRCode(qrEl, { text: url, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+  $('inviteModal').classList.add('active');
+}
+$('copyLinkBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText($('inviteLinkText').textContent);
+  toast('Link copied');
+});
+$('shareBtn').addEventListener('click', async () => {
+  const url = $('inviteLinkText').textContent;
+  if (navigator.share) {
+    try { await navigator.share({ title: 'Join my Roadmap', text: 'Collaborate on our digital transformation roadmap', url }); }
+    catch {}
+  } else {
+    navigator.clipboard.writeText(url);
+    toast('Sharing not supported — link copied');
+  }
+});
+
+/* ========== RENDER ========== */
+function render() {
+  if (!state.data) return;
+  renderTopbar();
+  renderOverview();
+  renderPhases();
+  renderMatrix();
+  renderMaturity();
+  renderTimeline();
+  renderRisks();
+  renderKpis();
+  renderComments();
+}
+
+function renderTopbar() {
+  const members = state.data.members || {};
+  const list = Object.values(members);
+  const wrap = $('collaborators');
+  wrap.innerHTML = '';
+  list.slice(0, 5).forEach(m => {
+    const a = document.createElement('div');
+    a.className = 'avatar online';
+    a.style.background = m.color || colorFor(m.name);
+    a.title = m.name;
+    a.textContent = (m.name || '?').slice(0, 2).toUpperCase();
+    wrap.appendChild(a);
+  });
+  if (list.length > 5) {
+    const a = document.createElement('div');
+    a.className = 'avatar';
+    a.style.background = 'var(--text-muted)';
+    a.textContent = '+' + (list.length - 5);
+    wrap.appendChild(a);
+  }
+}
+
+function renderOverview() {
+  $('roadmapName').textContent = state.data.name || 'Untitled Roadmap';
+  $('roadmapVision').textContent = state.data.vision || 'Click Edit Details to add a vision.';
+  const inits = Object.values(state.data.initiatives || {});
+  $('statInit').textContent = inits.length;
+  const done = inits.filter(i => i.status === 'done').length;
+  const prog = inits.filter(i => i.status === 'progress').length;
+  $('statDone').textContent = done;
+  $('statProg').textContent = prog;
+  const pct = inits.length ? Math.round((done / inits.length) * 100) : 0;
+  $('statPct').textContent = pct + '%';
+  $('statBar').style.width = pct + '%';
+}
+
+function renderPhases() {
+  const board = $('phasesBoard');
+  board.innerHTML = '';
+  const inits = state.data.initiatives || {};
+  PHASES.forEach(phase => {
+    const items = Object.entries(inits).filter(([_, i]) => i.phase === phase.id);
+    const col = document.createElement('div');
+    col.className = 'phase-col';
+    col.innerHTML = `
+      <div class="phase-header">
+        <div class="phase-title">${phase.emoji} ${phase.name}</div>
+        <div class="phase-count">${items.length}</div>
+      </div>
+      <div class="phase-items"></div>
+    `;
+    const itemsWrap = col.querySelector('.phase-items');
+    if (items.length === 0) {
+      itemsWrap.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:16px;">No initiatives yet</div>';
+    }
+    items.forEach(([id, i]) => {
+      const card = document.createElement('div');
+      card.className = 'initiative';
+      card.style.borderLeftColor = i.priority === 'high' ? 'var(--danger)' : i.priority === 'low' ? 'var(--success)' : 'var(--warning)';
+      card.innerHTML = `
+        <div class="initiative-title">${escapeHtml(i.title)}</div>
+        ${i.owner ? `<div style="font-size:12px;color:var(--text-muted);">👤 ${escapeHtml(i.owner)}</div>` : ''}
+        <div class="initiative-meta">
+          <span class="tag priority-${i.priority}">${i.priority}</span>
+          <span class="tag status-${i.status}">${i.status}</span>
+          <span class="tag">I:${i.impact} E:${i.effort}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openInitiativeModal(id));
+      itemsWrap.appendChild(card);
+    });
+    board.appendChild(col);
+  });
+}
+
+function renderMatrix() {
+  const grid = $('matrixGrid');
+  grid.querySelectorAll('.matrix-dot').forEach(d => d.remove());
+  const inits = state.data.initiatives || {};
+  Object.entries(inits).forEach(([id, i], idx) => {
+    // x = effort (0-100), y = impact inverted (0 = top)
+    const x = ((i.effort || 5) / 10) * 100;
+    const y = 100 - ((i.impact || 5) / 10) * 100;
+    const dot = document.createElement('div');
+    dot.className = 'matrix-dot';
+    dot.style.left = x + '%';
+    dot.style.top = y + '%';
+    dot.style.background = i.priority === 'high' ? 'var(--danger)' : i.priority === 'low' ? 'var(--success)' : 'var(--warning)';
+    dot.textContent = idx + 1;
+    dot.title = i.title;
+    dot.addEventListener('click', () => openInitiativeModal(id));
+    grid.appendChild(dot);
+  });
+}
+
+function renderMaturity() {
+  const grid = $('maturityGrid');
+  grid.innerHTML = '';
+  const m = state.data.maturity || {};
+  MATURITY_DIMENSIONS.forEach(dim => {
+    const val = m[dim.id] || 1;
+    const row = document.createElement('div');
+    row.className = 'maturity-row';
+    row.innerHTML = `
+      <div>
+        <h4>${escapeHtml(dim.name)}</h4>
+        <p>${escapeHtml(dim.desc)}</p>
+      </div>
+      <div class="maturity-slider">
+        <input type="range" min="1" max="5" value="${val}" data-dim="${dim.id}" />
+        <div class="level-pill"><strong>${val}</strong> · ${LEVEL_NAMES[val]}</div>
+      </div>
+    `;
+    const input = row.querySelector('input');
+    const pill = row.querySelector('.level-pill');
+    input.addEventListener('input', () => {
+      pill.innerHTML = `<strong>${input.value}</strong> · ${LEVEL_NAMES[input.value]}`;
+    });
+    input.addEventListener('change', () => {
+      updatePath('maturity/' + dim.id, parseInt(input.value, 10));
+    });
+    grid.appendChild(row);
+  });
+}
+
+function renderTimeline() {
+  const grid = $('timelineGrid');
+  grid.innerHTML = '';
+  const months = ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'];
+  let head = '<div class="timeline-header"><div></div>';
+  months.forEach(m => head += `<div class="timeline-cell">${m}</div>`);
+  head += '</div>';
+  grid.innerHTML = head;
+  const inits = Object.entries(state.data.initiatives || {});
+  if (inits.length === 0) {
+    const e = document.createElement('div');
+    e.className = 'empty-state';
+    e.innerHTML = '<div class="icon">📅</div><div>Add initiatives to see the timeline</div>';
+    grid.appendChild(e);
+    return;
+  }
+  inits.sort((a, b) => (a[1].start || 1) - (b[1].start || 1));
+  inits.forEach(([id, i]) => {
+    const row = document.createElement('div');
+    row.className = 'timeline-row';
+    let html = `<div class="timeline-label" title="${escapeHtml(i.title)}">${escapeHtml(i.title)}</div>`;
+    for (let m = 1; m <= 12; m++) html += `<div class="timeline-bar-cell" data-m="${m}"></div>`;
+    row.innerHTML = html;
+    const start = Math.max(1, Math.min(12, i.start || 1));
+    const dur = Math.max(1, Math.min(12 - start + 1, i.duration || 1));
+    const cell = row.querySelector(`[data-m="${start}"]`);
+    if (cell) {
+      const bar = document.createElement('div');
+      bar.className = 'timeline-bar';
+      bar.style.left = '0';
+      bar.style.width = `calc(${dur * 100}% + ${(dur - 1) * 4}px)`;
+      bar.textContent = i.title;
+      bar.addEventListener('click', () => openInitiativeModal(id));
+      bar.style.cursor = 'pointer';
+      if (i.status === 'done') bar.style.opacity = '0.6';
+      if (i.status === 'blocked') bar.style.background = 'var(--danger)';
+      cell.appendChild(bar);
+    }
+    grid.appendChild(row);
+  });
+}
+
+function renderRisks() {
+  const tbody = $('risksBody');
+  tbody.innerHTML = '';
+  const risks = Object.entries(state.data.risks || {});
+  if (risks.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="icon">⚠️</div>No risks logged yet</div></td></tr>';
+    return;
+  }
+  risks.forEach(([id, r]) => {
+    const score = (r.likelihood || 1) * (r.impact || 1);
+    const lvl = score >= 15 ? 'high' : score >= 8 ? 'med' : 'low';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${escapeHtml(r.desc)}</strong></td>
+      <td>${r.likelihood}/5</td>
+      <td>${r.impact}/5</td>
+      <td><span class="risk-score ${lvl}">${score}</span></td>
+      <td style="max-width:240px;">${escapeHtml(r.mitigation || '—')}</td>
+      <td>${escapeHtml(r.owner || '—')}</td>
+      <td><button class="btn btn-ghost btn-sm" data-edit="${id}">✏️</button></td>
+    `;
+    tr.querySelector('[data-edit]').addEventListener('click', () => openRiskModal(id));
+    tbody.appendChild(tr);
+  });
+}
+
+function renderKpis() {
+  const grid = $('kpisGrid');
+  grid.innerHTML = '';
+  const kpis = Object.entries(state.data.kpis || {});
+  if (kpis.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon">🎯</div>No KPIs defined yet</div>';
+    return;
+  }
+  kpis.forEach(([id, k]) => {
+    const cur = parseFloat(k.current) || 0;
+    const tgt = parseFloat(k.target) || 1;
+    const pct = Math.min(100, Math.round((cur / tgt) * 100));
+    const card = document.createElement('div');
+    card.className = 'stat-card';
+    card.style.cursor = 'pointer';
+    card.innerHTML = `
+      <div class="stat-label">${escapeHtml(k.name)}</div>
+      <div class="stat-value">${escapeHtml(k.current || '0')}<span style="font-size:14px;color:var(--text-muted);font-weight:500;"> / ${escapeHtml(k.target || '0')} ${escapeHtml(k.unit || '')}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">${pct}% to target</div>
+    `;
+    card.addEventListener('click', () => openKpiModal(id));
+    grid.appendChild(card);
+  });
+}
+
+function renderComments() {
+  const list = $('commentsList');
+  list.innerHTML = '';
+  const items = Object.values(state.data.comments || {}).sort((a, b) => a.at - b.at);
+  if (items.length === 0) {
+    list.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:13px;padding:16px;">No messages yet — start the conversation!</div>';
+    return;
+  }
+  items.slice(-50).forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'comment';
+    const date = new Date(c.at);
+    d.innerHTML = `<div class="comment-meta" style="color:${colorFor(c.author)}">${escapeHtml(c.author)} · ${date.toLocaleString()}</div><div>${escapeHtml(c.text)}</div>`;
+    list.appendChild(d);
+  });
+  list.scrollTop = list.scrollHeight;
+}
+
+/* ========== INITIATIVE MODAL ========== */
+$('addInitiativeBtn').addEventListener('click', () => openInitiativeModal());
+function openInitiativeModal(id) {
+  $('initId').value = id || '';
+  $('initModalTitle').textContent = id ? 'Edit Initiative' : 'New Initiative';
+  $('deleteInitBtn').style.display = id ? 'inline-flex' : 'none';
+  if (id) {
+    const i = state.data.initiatives[id];
+    $('initTitle').value = i.title || '';
+    $('initDesc').value = i.description || '';
+    $('initPhase').value = i.phase || 'discovery';
+    $('initStatus').value = i.status || 'planned';
+    $('initPriority').value = i.priority || 'medium';
+    $('initOwner').value = i.owner || '';
+    $('initImpact').value = i.impact || 5;
+    $('initEffort').value = i.effort || 5;
+    $('initStart').value = i.start || 1;
+    $('initDuration').value = i.duration || 3;
+  } else {
+    ['initTitle','initDesc','initOwner'].forEach(k => $(k).value = '');
+    $('initPhase').value = 'discovery';
+    $('initStatus').value = 'planned';
+    $('initPriority').value = 'medium';
+    $('initImpact').value = 5; $('initEffort').value = 5;
+    $('initStart').value = 1; $('initDuration').value = 3;
+  }
+  $('initiativeModal').classList.add('active');
+}
+$('saveInitBtn').addEventListener('click', async () => {
+  const title = $('initTitle').value.trim();
+  if (!title) { toast('Title required'); return; }
+  const id = $('initId').value || 'i_' + uid();
+  const data = {
+    title,
+    description: $('initDesc').value.trim(),
+    phase: $('initPhase').value,
+    status: $('initStatus').value,
+    priority: $('initPriority').value,
+    owner: $('initOwner').value.trim(),
+    impact: parseInt($('initImpact').value, 10) || 5,
+    effort: parseInt($('initEffort').value, 10) || 5,
+    start: parseInt($('initStart').value, 10) || 1,
+    duration: parseInt($('initDuration').value, 10) || 1,
+    updatedAt: Date.now(),
+    updatedBy: state.userName
+  };
+  await updatePath('initiatives/' + id, data);
+  $('initiativeModal').classList.remove('active');
+  toast('Initiative saved');
+});
+$('deleteInitBtn').addEventListener('click', async () => {
+  const id = $('initId').value;
+  if (!id) return;
+  if (!confirm('Delete this initiative?')) return;
+  await updatePath('initiatives/' + id, null);
+  $('initiativeModal').classList.remove('active');
+  toast('Deleted');
+});
+
+/* ========== META MODAL ========== */
+$('editMetaBtn').addEventListener('click', () => {
+  $('metaName').value = state.data.name || '';
+  $('metaVision').value = state.data.vision || '';
+  $('metaOrg').value = state.data.org || '';
+  $('metaModal').classList.add('active');
+});
+$('saveMetaBtn').addEventListener('click', async () => {
+  await updatePath('name', $('metaName').value.trim() || 'Untitled Roadmap');
+  await updatePath('vision', $('metaVision').value.trim());
+  await updatePath('org', $('metaOrg').value.trim());
+  $('metaModal').classList.remove('active');
+  toast('Saved');
+});
+
+/* ========== RISK MODAL ========== */
+$('addRiskBtn').addEventListener('click', () => openRiskModal());
+function openRiskModal(id) {
+  $('riskId').value = id || '';
+  $('riskModalTitle').textContent = id ? 'Edit Risk' : 'New Risk';
+  $('deleteRiskBtn').style.display = id ? 'inline-flex' : 'none';
+  if (id) {
+    const r = state.data.risks[id];
+    $('riskDesc').value = r.desc || '';
+    $('riskLikelihood').value = r.likelihood || 3;
+    $('riskImpact').value = r.impact || 3;
+    $('riskMitigation').value = r.mitigation || '';
+    $('riskOwner').value = r.owner || '';
+  } else {
+    $('riskDesc').value = ''; $('riskLikelihood').value = 3; $('riskImpact').value = 3;
+    $('riskMitigation').value = ''; $('riskOwner').value = '';
+  }
+  $('riskModal').classList.add('active');
+}
+$('saveRiskBtn').addEventListener('click', async () => {
+  const desc = $('riskDesc').value.trim();
+  if (!desc) { toast('Description required'); return; }
+  const id = $('riskId').value || 'r_' + uid();
+  await updatePath('risks/' + id, {
+    desc,
+    likelihood: parseInt($('riskLikelihood').value, 10) || 1,
+    impact: parseInt($('riskImpact').value, 10) || 1,
+    mitigation: $('riskMitigation').value.trim(),
+    owner: $('riskOwner').value.trim(),
+    updatedAt: Date.now()
+  });
+  $('riskModal').classList.remove('active');
+  toast('Risk saved');
+});
+$('deleteRiskBtn').addEventListener('click', async () => {
+  const id = $('riskId').value;
+  if (!id || !confirm('Delete this risk?')) return;
+  await updatePath('risks/' + id, null);
+  $('riskModal').classList.remove('active');
+});
+
+/* ========== KPI MODAL ========== */
+$('addKpiBtn').addEventListener('click', () => openKpiModal());
+function openKpiModal(id) {
+  $('kpiId').value = id || '';
+  $('kpiModalTitle').textContent = id ? 'Edit KPI' : 'New KPI';
+  $('deleteKpiBtn').style.display = id ? 'inline-flex' : 'none';
+  if (id) {
+    const k = state.data.kpis[id];
+    $('kpiName').value = k.name || ''; $('kpiCurrent').value = k.current || '';
+    $('kpiTarget').value = k.target || ''; $('kpiUnit').value = k.unit || '';
+  } else {
+    ['kpiName','kpiCurrent','kpiTarget','kpiUnit'].forEach(k => $(k).value = '');
+  }
+  $('kpiModal').classList.add('active');
+}
+$('saveKpiBtn').addEventListener('click', async () => {
+  const name = $('kpiName').value.trim();
+  if (!name) { toast('Name required'); return; }
+  const id = $('kpiId').value || 'k_' + uid();
+  await updatePath('kpis/' + id, {
+    name,
+    current: $('kpiCurrent').value.trim(),
+    target: $('kpiTarget').value.trim(),
+    unit: $('kpiUnit').value.trim()
+  });
+  $('kpiModal').classList.remove('active');
+});
+$('deleteKpiBtn').addEventListener('click', async () => {
+  const id = $('kpiId').value;
+  if (!id || !confirm('Delete this KPI?')) return;
+  await updatePath('kpis/' + id, null);
+  $('kpiModal').classList.remove('active');
+});
+
+/* ========== COMMENTS ========== */
+$('postCommentBtn').addEventListener('click', postComment);
+$('commentInput').addEventListener('keydown', e => { if (e.key === 'Enter') postComment(); });
+async function postComment() {
+  const text = $('commentInput').value.trim();
+  if (!text) return;
+  const id = 'c_' + uid();
+  await updatePath('comments/' + id, { text, author: state.userName, at: Date.now() });
+  $('commentInput').value = '';
+}
+
+/* ========== EXPORT ========== */
+$('exportBtn').addEventListener('click', () => {
+  const data = { id: state.roadmapId, ...state.data, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `roadmap-${state.roadmapId}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Roadmap exported');
+});
+
+/* ========== SHOW STORAGE MODE ========== */
+console.log('Storage mode:', useFirebase ? 'Firebase Realtime DB' : 'localStorage (offline / single-device)');
+if (!useFirebase) {
+  console.warn('Real-time collaboration requires a valid Firebase config in firebaseConfig (see <script> at the top of the file). Currently using localStorage which works on a single device only.');
+}
+</script>
+
+</body>
+</html>
