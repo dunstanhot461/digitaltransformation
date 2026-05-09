@@ -1,7 +1,8 @@
 # Secrets / local config — never commit
 .env
 .env.local
-firebase-config.js
+# firebase-config.js — committed because Firebase web apiKey is non-secret;
+# protection is via Database Rules + Authorized Domains + App Check.
 
 # OS / editor
 .DS_Store
